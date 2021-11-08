@@ -5,7 +5,9 @@ const OutgoingHeaders = require("./OutgoingHeaders");
 const IncomingHeaders = require("./IncomingHeaders");
 const Incoming = require("./packets/incoming/Incoming");
 const RoomEnterComposer = require("./packets/outgoing/RoomEnterComposer");
-const {EventEmitter} = require("events");
+const RoomUnitChatComposer = require("./packets/outgoing/RoomUnitChatComposer");
+const Room = require("./habbo/Room");
+const { EventEmitter } = require("events");
 
 let pattern = "{c*:version,c*:type,i:unknown1,i:unknown2}";
 Parser.RegisterPattern(pattern, OutgoingHeaders.RELEASE_VERSION);
@@ -19,47 +21,57 @@ Incoming.RegisterPackets();
 class HabbletClient extends EventEmitter {
 
 	Connection;
+	Room = Room;
+	Debug = false;
 
-	constructor(ssoTicket){
+	constructor(ssoTicket) {
 		super();
 
 		this.Connection = new WebSocket("wss://proxy.habblet.com.br:2083/", {
 			origin: "https://www.habblet.city"
 		});
 
-		this.Connection.on("open", () => {
-			console.log("[info]: Sending release...")
-			this.Connection.send(Parser.Encode([
-				"PRODUCTION-202101271337-HTML5",
-				"HTML5",
-				2,
-				1
-			], OutgoingHeaders.RELEASE_VERSION).compose());
+		try {
+			this.Connection.on("open", () => {
+				console.log("[info]: Sending release...")
+				this.Connection.send(Parser.Encode([
+					"PRODUCTION-202101271337-HTML5",
+					"HTML5",
+					2,
+					1
+				], OutgoingHeaders.RELEASE_VERSION).compose());
 
-			console.log("[info]: Sending machine-id...")
-			this.Connection.send(Parser.Encode([
-				"",
-				"HWID-2175538651",
-			], OutgoingHeaders.MACHINE_ID).compose());
+				console.log("[info]: Sending machine-id...")
+				this.Connection.send(Parser.Encode([
+					"",
+					"HWID-2175538651",
+				], OutgoingHeaders.MACHINE_ID).compose());
 
-			console.log("[info]: Sending sso ticket...")
-			this.Connection.send(Parser.Encode([
-				ssoTicket,
-				0x00008882,
-			], OutgoingHeaders.SECURE_LOGIN).compose());
-		});
+				console.log("[info]: Sending sso ticket...")
+				this.Connection.send(Parser.Encode([
+					ssoTicket,
+					0x00008882,
+				], OutgoingHeaders.SECURE_LOGIN).compose());
+			});
+		} catch (error) {
+			console.log(`Failure on Open: ${error}`)
+		}
 
-		this.Connection.on("message", message => {
-			let data = new ByteBuffer(message);
+		try {
+			this.Connection.on("message", message => {
+				let data = new ByteBuffer(message);
 
-			// let length = data.readInt();
-			// let header = data.readShort();
+				// let length = data.readInt();
+				// let header = data.readShort();
 
-			let check = Incoming.Parse(data, this);
+				let check = Incoming.Parse(data, this);
 
-			if(!check.success)
-				console.log(`[Unknown Packet]: ${check.header}`);
-		});
+				// if(!check.success)
+				// 	console.log(`[Unknown Packet]: ${check.header}`);
+			});
+		} catch (error) {
+			console.log(`Failure on message: ${error}`)
+		}
 
 		this.Connection.on("close", () => {
 			console.log("Closed.")
@@ -67,8 +79,15 @@ class HabbletClient extends EventEmitter {
 
 	}
 
-	EnterRoom(roomId){
-		this.Connection.send(new RoomEnterComposer(roomId).compose());
+	EnterRoom(roomId) {
+		this.Debug && console.log(`Room ID: ${roomId}`)
+		Room.Units = [];
+		this.Connection.send(new RoomEnterComposer(roomId).compose())
+	}
+
+	SendMessage(message, bubbleId) {
+		this.Debug && console.log(`Message Sent: ${message}`, `BubbleID: ${bubbleId}`)
+		this.Connection.send(new RoomUnitChatComposer(message, bubbleId).compose());
 	}
 
 }

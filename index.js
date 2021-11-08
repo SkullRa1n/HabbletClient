@@ -1,7 +1,9 @@
 let HabbletClient = require("./HabbletClient");
 
-//ontem eu comi as 20 novinhas e eu n peguei nenhum DST confia rapa
-let client = new HabbletClient("791d7f1003acc9105ffc1bb78734808953434927-a57992d63c509ca93672436c3e2016ed");
+
+let client = new HabbletClient(
+	"46a952d3f6532e1c5d0d4d8cf34f456fa80ce80d-36fe32dc8cd73326fdf3b92b9d62794c"
+);
 
 client.on("Loaded", () => {
 
@@ -11,6 +13,18 @@ client.on("Loaded", () => {
 
 client.on("RoomUnitChat", data => {
 
-	console.log(data.message)
+	let unit = client.Room.GetUnitByIndex(data.roomIndex);
+	if(unit && unit.username !== "bot00001" && data.message.startsWith(":")){
+		let command = data.message.substr(1).split(' ');
 
-})
+		switch(command[0]){
+			case "gritar":
+				client.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+				break;
+			case "amar":
+				client.SendMessage(`Eu te amo ${unit.username}`);
+				break;
+		}
+
+	}
+});
