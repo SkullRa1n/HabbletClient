@@ -1,5 +1,9 @@
 let HabbletClient = require("./HabbletClient");
 
+// Se tu for editar algo aqui
+// o vscode vai te avisar ó
+
+// o M é que tu modificou e precisa enviar, aí tu faz isso aqui ó
 
 let client = new HabbletClient(
 	"46a952d3f6532e1c5d0d4d8cf34f456fa80ce80d-36fe32dc8cd73326fdf3b92b9d62794c"
