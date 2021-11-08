@@ -4,7 +4,10 @@ let OutgoingHeaders = {
 	MACHINE_ID: 2490,
 	SECURE_LOGIN: 2419,
 	ROOM_ENTER: 2312,
-	UNIT_CHAT: 1314
+	UNIT_CHAT: 1314,
+	ROOM_MODEL: 2300,
+	ROOM_MODEL_DOOR: 3559,
+	ROOM_MODEL_BLOCKED_TILES: 1687,
 }
 
 module.exports = OutgoingHeaders;

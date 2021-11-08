@@ -14,8 +14,7 @@ class RoomUnitEvent {
 			Room.Units.push(data.users[i]);
 		}
 
-		client.emit("UnitEnterRoom", data);
-
+		client.emit("RoomUnitLoaded", data);
 	}
 
 }

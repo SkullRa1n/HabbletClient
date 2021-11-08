@@ -1,4 +1,4 @@
-
+let ByteBuffer = require("../ByteBuffer");
 
 class RoomUnit {
 
@@ -120,6 +120,21 @@ class RoomUnit {
 	getSex(sex){
 		return sex.substr(0, 1);
 	}
+
+    Update(unitStatus){
+        this.x = unitStatus.x;
+        this.y = unitStatus.y;
+        this.z = unitStatus.z;
+        this.height = unitStatus.height;
+        this.headDirection = unitStatus.headDirection;
+        this.direction = unitStatus.direction;
+        this.targetX = unitStatus.targetX;
+        this.targetY = unitStatus.targetY;
+        this.targetZ = unitStatus.targetZ;
+        this.didMove = unitStatus.didMove;
+        this.canStandUp = unitStatus.canStandUp;
+        this.actions = unitStatus.actions;
+    }
 
 	convertSwimFigure(k, _arg_2, _arg_3){
         const _local_4    = _arg_2.split('.');

@@ -22,6 +22,7 @@ class HabbletClient extends EventEmitter {
 
 	Connection;
 	Room = Room;
+	Debug = false;
 
 	constructor(ssoTicket) {
 		super();
@@ -79,13 +80,14 @@ class HabbletClient extends EventEmitter {
 	}
 
 	EnterRoom(roomId) {
+		this.Debug && console.log(`Room ID: ${roomId}`)
+		Room.Units = [];
 		this.Connection.send(new RoomEnterComposer(roomId).compose())
-		console.log(`Room ID: ${roomId}`)
 	}
 
 	SendMessage(message, bubbleId) {
+		this.Debug && console.log(`Message Sent: ${message}`, `BubbleID: ${bubbleId}`)
 		this.Connection.send(new RoomUnitChatComposer(message, bubbleId).compose());
-		console.log(`Message Sent: ${message}`, `BubbleID: ${bubbleId}`)
 	}
 
 }
