@@ -3,7 +3,7 @@ let HabbletClient = require("./HabbletClient");
 // E ai nicolau
 
 let client = new HabbletClient(
-	"46a952d3f6532e1c5d0d4d8cf34f456fa80ce80d-36fe32dc8cd73326fdf3b92b9d62794c"
+	"ed4c1a5c62730bbedd856e9c15e52d1507f7173d-36fe32dc8cd73326fdf3b92b9d62794c"
 );
 
 client.on("Loaded", () => {
@@ -16,14 +16,26 @@ client.on("RoomUnitChat", data => {
 
 	let unit = client.Room.GetUnitByIndex(data.roomIndex);
 	if(unit && unit.username !== "bot00001" && data.message.startsWith(":")){
-		let command = data.message.substr(1).split(' ');
+		let command = data.message.split(' ');
 
 		switch(command[0]){
-			case "gritar":
+			case ":gritar":
 				client.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
 				break;
-			case "amar":
-				client.SendMessage(`Eu te amo ${unit.username}`);
+			case ":andar":
+				client.WalkTo(Number(command[1]), Number(command[2]))
+				break;
+			case ":ebase64":
+				command.shift();
+				command = command.join(" ");
+				console.log(command)
+				client.UpdateMotto(Buffer.from(command).toString("base64"));
+				break;
+			case ":dbase64":
+				command.shift();
+				command = command.join(" ");
+				console.log(command)
+				client.UpdateMotto(Buffer.from(command, "base64").toString());
 				break;
 		}
 

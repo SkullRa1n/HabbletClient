@@ -6,6 +6,8 @@ const IncomingHeaders = require("./IncomingHeaders");
 const Incoming = require("./packets/incoming/Incoming");
 const RoomEnterComposer = require("./packets/outgoing/RoomEnterComposer");
 const RoomUnitChatComposer = require("./packets/outgoing/RoomUnitChatComposer");
+const RoomUnitWalkComposer = require("./packets/outgoing/RoomUnitWalkComposer");
+const UserMottoComposer = require("./packets/outgoing/UserMottoComposer");
 const Room = require("./habbo/Room");
 const { EventEmitter } = require("events");
 
@@ -88,6 +90,14 @@ class HabbletClient extends EventEmitter {
 	SendMessage(message, bubbleId) {
 		this.Debug && console.log(`Message Sent: ${message}`, `BubbleID: ${bubbleId}`)
 		this.Connection.send(new RoomUnitChatComposer(message, bubbleId).compose());
+	}
+
+	WalkTo(x, y){
+		this.Connection.send(new RoomUnitWalkComposer(x, y).compose());
+	}
+
+	UpdateMotto(motto){
+		this.Connection.send(new UserMottoComposer(motto).compose());
 	}
 
 }

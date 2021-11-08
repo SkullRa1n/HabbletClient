@@ -8,6 +8,8 @@ let OutgoingHeaders = {
 	ROOM_MODEL: 2300,
 	ROOM_MODEL_DOOR: 3559,
 	ROOM_MODEL_BLOCKED_TILES: 1687,
+	UNIT_WALK: 3320,
+	USER_MOTTO: 2228
 }
 
 module.exports = OutgoingHeaders;
