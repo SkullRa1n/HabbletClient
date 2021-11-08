@@ -1,7 +1,7 @@
 let HabbletClient = require("./HabbletClient");
 
 //ontem eu comi as 20 novinhas e eu n peguei nenhum DST confia rapa
-let client = new HabbletClient("edb5289839928000a5e7fdf7a86717eb0a6e119e-36fe32dc8cd73326fdf3b92b9d62794c");
+let client = new HabbletClient("791d7f1003acc9105ffc1bb78734808953434927-a57992d63c509ca93672436c3e2016ed");
 
 client.on("Loaded", () => {
 
