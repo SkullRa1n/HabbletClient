@@ -1,7 +1,5 @@
 let HabbletClient = require("./HabbletClient");
 
-// E ai nicolau
-
 let client = new HabbletClient(
 	"ed4c1a5c62730bbedd856e9c15e52d1507f7173d-36fe32dc8cd73326fdf3b92b9d62794c"
 );
