@@ -1,15 +1,24 @@
 {
-  "name": "habblet",
+  "name": "habbletclient",
   "version": "1.0.0",
-  "description": "Um cliente robô para o jogo Habblet",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js",
-    "start": "nodemon index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "ReversiveDev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReversiveDev/HabbletClient.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ReversiveDev/HabbletClient/issues"
+  },
+  "homepage": "https://github.com/ReversiveDev/HabbletClient#readme",
   "dependencies": {
-    "ws": "^8.2.3"
+    "bytebufferjs": "^1.0.3",
+    "ws": "^8.6.0"
   }
 }
