@@ -5,6 +5,8 @@ const SecurityMachine = require("./messages/outgoing/security_machine");
 const SecutiryTicket = require("./messages/outgoing/security_ticket");
 const ByteBuffer = require("bytebufferjs");
 const Incoming = require("./messages/incoming");
+const UserInfo = require("./messages/outgoing/user_info");
+const MessengerInit = require("./messages/outgoing/messenger_init");
 
 module.exports = class HabbletClient extends EventEmitter {
 
@@ -35,6 +37,11 @@ module.exports = class HabbletClient extends EventEmitter {
         });
         this.connection.on("close", () => {
             this.emit("connection-close");
+        });
+
+        this.on("authenticated", () => {
+            this.connection.send(new UserInfo().compose());
+            // this.connection.send(new MessengerInit().compose());
         });
     }
 

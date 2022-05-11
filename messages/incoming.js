@@ -1,5 +1,6 @@
 const fs = require("fs");
 const files = fs.readdirSync("./messages/incoming");
+const term = require( 'terminal-kit' ).terminal ;
 const handles = {};
 
 for(let file of files) {
@@ -15,7 +16,10 @@ module.exports = class Incoming {
         let length = packet.readInt();
         let header = packet.readShort();
         if(handles[header]) {
+            client.debug && term.green("[INCOMING] ").defaultColor(handles[header].name + "\n");
             handles[header].Parse(client, packet);
+        }else {
+            client.debug && term.red("Unknown packet: " + header + "\n");
         }
     }
 
