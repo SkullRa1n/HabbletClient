@@ -1,7 +1,23 @@
 let HabbletClient = require("./habblet_client");
+let readline = require("readline");
+let rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-let client = new HabbletClient("45673a88993a79777eaaed9fdb4cb4e80ab7e499-99fe967d5fc03db8e9c38533147b17a0");
-client.debug = true;
-client.on("connection-open", () => {
-    client.authenticate();
+rl.question("SSO > ", answer => {
+    let client = new HabbletClient(answer);
+    client.debug = true;
+    client.on("connection-open", () => {
+        client.authenticate();
+    });
+
+    client.on("authenticated", () => {
+        setTimeout(() => {
+            console.log("Entering room...");
+            client.enterRoom(5390364);
+        }, 100);
+    });
+
+    client.on("unit-chat", async chatMessage => {});
 });
