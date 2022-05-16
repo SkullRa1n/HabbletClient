@@ -1,5 +1,6 @@
 const { Aki } = require('aki-api');
 let HabbletClient = require("./habblet_client");
+const config = require("./config.json");
 let readline = require("readline");
 let rl = readline.createInterface({
     input: process.stdin,
@@ -28,7 +29,7 @@ rl.question("SSO > ", answer => {
     client.on("authenticated", () => {
         setTimeout(() => {
             console.log("Entering room...");
-            client.enterRoom(5390364);
+            client.enterRoom(config.roomid);
         }, 100);
     });
 
@@ -61,7 +62,7 @@ rl.question("SSO > ", answer => {
                         await aki.win();
                         console.log(aki.answers[0]);
                         client.sendRoomTalk(aki.answers[0].name);
-                        // client.sendRoomTalk("Total de acertos: " + aki.guessCount);
+                        client.sendRoomTalk("Total de acertos: " + aki.guessCount);
                         status = "offline";
                     }else {
                         status = "ready";

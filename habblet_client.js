@@ -16,6 +16,7 @@ const GetClubGiftInfo = require("./messages/outgoing/get_club_gift_info");
 const SrcGetKickbackInfo = require("./messages/outgoing/src_get_kickback_info");
 const UserIgnored = require("./messages/outgoing/user_ignored");
 const UnitChat = require("./messages/outgoing/unit_chat");
+const config = require("./config.json");
 
 module.exports = class HabbletClient extends EventEmitter {
 
@@ -58,7 +59,7 @@ module.exports = class HabbletClient extends EventEmitter {
             // this.connection.send(new GetClubGiftInfo().compose());
             // this.connection.send(new SrcGetKickbackInfo().compose());
 
-            this.connection.send(new UserIgnored("VirgemERegresso").compose());
+            this.connection.send(new UserIgnored(`${config.botname}`).compose());
         });
     }
 
