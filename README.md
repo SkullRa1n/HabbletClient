@@ -13,6 +13,16 @@ No repositório tem o download do node.js
 4. Se divirta!
 ```
 
+## Direitos!
+
+Todos os direitos dos autores
+
+```javascript
+Criador da package: [ReversiveDev](https://github.com/ReversiveDev/)
+Link da package: [HabbletClient](https://npmjs.org/package/habbletclient/)
+Criador do bot: [SkullRa1n](https://github.com/SkullRa1n/)
+```
+
 ## Como usar
 
 ```javascript
