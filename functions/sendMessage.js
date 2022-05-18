@@ -1,6 +1,6 @@
 let { HabbletClient } = require("habbletclient");
 
-module.exports = async function SendMessage(message, timer, client) {
+async function send(message, timer, client) {
     if(timer) {
         timer = 1000 * timer;
     }
@@ -8,6 +8,8 @@ module.exports = async function SendMessage(message, timer, client) {
         timer = 1000;
     }
     setTimeout(async () => {
-        await client.sendRoomTalk(message)
+        console.log('a')
+        HabbletClient.sendRoomTalk(message)
     }, timer)
 }
+module.exports.send = send;
