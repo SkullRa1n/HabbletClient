@@ -1,4 +1,4 @@
-let HabbletClient = require("./habblet_client");
+let { HabbletClient } = require("habbletclient");
 let readline = require("readline");
 const config = require("./config.json");
 const { readdirSync } = require("fs")
@@ -12,16 +12,14 @@ module.exports = {
     run: async () => {
         rl.question("Sso.Ticket: ", answer => {
             let client = new HabbletClient(answer);
-            client.debug = true;
+            client.debug = false;
             client.on("connection-open", () => {
                 client.authenticate();
             });
-
+            
             let table = new ascii("Comandos");
             table.setHeading("Comandos", "Estado de carregamento");
-
-            client.on("authenticated", () => {
-                var Map = require("collections/map");
+            var Map = require("collections/map");
                 readdirSync("./runcodes").forEach(dir => {
                     client.commands = new Map();
                     client.aliases = new Map();
@@ -37,10 +35,12 @@ module.exports = {
                         if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach(alias => client.aliases.set(alias, pull.name));
                     }
                 });
+
+            client.on("authenticated", () => {
                 setTimeout(() => {
                     console.log("Entrando no quarto...");
                     client.enterRoom(config.roomid);
-                }, 10000);
+                }, 1000);
             });
 
             client.on("unit-chat", async chatMessage => {

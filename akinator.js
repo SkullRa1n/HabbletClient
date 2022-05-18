@@ -1,5 +1,5 @@
 const { Aki } = require('aki-api');
-let HabbletClient = require("./habblet_client");
+let { HabbletClient } = require("habbletclient");
 const config = require("./config.json");
 let readline = require("readline");
 let rl = readline.createInterface({
@@ -15,7 +15,7 @@ let status = "offline";
 
 module.exports = {
     run: async () => {
-        rl.question("SSO > ", answer => {
+        rl.question("Sso.Ticket: ", answer => {
             let client = new HabbletClient(answer);
             client.debug = true;
             client.on("connection-open", () => {
